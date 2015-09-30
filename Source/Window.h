@@ -2,6 +2,8 @@
 #define WINDOW_H_DEFINED
 
 #include <SDL.h>
+const int Window_WIDTH = 640;
+const int Window_HEIGHT = 480;
 
 class Window
 {

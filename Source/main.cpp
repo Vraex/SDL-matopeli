@@ -3,8 +3,7 @@
 #include "Level.h"
 #include "Window.h"
 
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
+void LopetaPeli(Window);
 
 int main(int argc, char* args[])
 {
@@ -76,31 +75,50 @@ int main(int argc, char* args[])
 		{
 			old_suunta = suunta;
 
-			if (suunta == UP)
+			if (suunta == UP && y-20>=0)
 			{
-				y -= 30;
+				y -= 20;
 			}
-			else if (suunta == DOWN)
+			else
 			{
-				y += 30;
+				LopetaPeli(ikkuna);
 			}
-			else if (suunta == LEFT)
+			if (suunta == DOWN && y+20<Window_HEIGHT)
 			{
-				x -= 30;
+				y += 20;
 			}
-			else if (suunta == RIGHT)
+			else
 			{
-				x += 30;
+				LopetaPeli(ikkuna);
+			}
+			if (suunta == LEFT && x-20>=0)
+			{
+				x -= 20;
+			}
+			else
+			{
+				LopetaPeli(ikkuna);
+			}
+			if (suunta == RIGHT && x+20<Window_WIDTH)
+			{
+				x += 20;
+			}
+			else
+			{
+				LopetaPeli(ikkuna);
 			}
 			laskuri = 0;
 		}
-
-
+	
 		ikkuna.clear();
-		ikkuna.drawRect(x, y, 30, 30, 255, 0, 0);
+		ikkuna.drawRect(x, y, 20, 20, 255, 0, 0);
 		ikkuna.refresh();
 	}
-
 	
 	return 0;
+}
+
+void LopetaPeli(Window ikkuna)
+{
+		ikkuna.clear();
 }
