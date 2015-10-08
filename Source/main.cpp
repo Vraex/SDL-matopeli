@@ -4,6 +4,8 @@
 #include "Window.h"
 #include <cstdlib>
 #include <time.h>
+#include <stdlib.h>
+#include <vector>
 
 void LopetaPeli(Window);
 
@@ -21,8 +23,9 @@ int main(int argc, char* args[])
 
 	int size = 20;
 	int laskuri = 0;
-	int x = 16;
-	int y = 12;
+
+	int start_x = 16, start_y = 12;
+	int x = start_x, y = start_y;
 
 	srand (time(NULL));
 
@@ -32,6 +35,20 @@ int main(int argc, char* args[])
 	//k‰‰rmeen kentt‰ x=31 , y=23
 
 	Level square;
+	
+	int snake_size = 3;
+
+	std::vector<SDL_Point> snake;
+
+	SDL_Point tmp_point;
+
+	for (int i = 0; i < snake_size; i++)
+	{
+		tmp_point.x = start_x;
+		tmp_point.y = start_y + i;
+		snake.push_back(tmp_point);
+	}
+
 
 
 	while (!quit) {
@@ -86,33 +103,33 @@ int main(int argc, char* args[])
 		{
 			old_suunta = suunta;
 
-			if (suunta == UP && y-1>=0)
+			if (suunta == UP && snake[0].y-1>=0)
 			{
-				y -= 1;
+				snake[0].y--;
 			}
 			else
 			{
 				LopetaPeli(ikkuna);
 			}
-			if (suunta == DOWN && y+1<24)
+			if (suunta == DOWN && snake[0].y+1<24)
 			{
-				y += 1;
+				snake[0].y++;
 			}
 			else
 			{
 				LopetaPeli(ikkuna);
 			}
-			if (suunta == LEFT && x-1>=0)
+			if (suunta == LEFT && snake[0].x-1>=0)
 			{
-				x -= 1;
+				snake[0].x--;
 			}
 			else
 			{
 				LopetaPeli(ikkuna);
 			}
-			if (suunta == RIGHT && x+1<32)
+			if (suunta == RIGHT && snake[0].x+1<32)
 			{
-				x += 1;
+				snake[0].x++;
 			}
 			else
 			{
@@ -121,14 +138,23 @@ int main(int argc, char* args[])
 			laskuri = 0;
 		}
 	
-		if (x == random_x && y == random_y)
+		if (snake[0].x == random_x && snake[0].y == random_y)
 		{
 		random_x = rand() % 31;
 		random_y = rand() % 23;
 		}
 
+
 		ikkuna.clear();
-		ikkuna.drawRect(x * size, y * size, 20, 20, 255, 0, 0);
+		
+		
+
+		for (int i = 0; i < snake_size; i++)
+		{
+			ikkuna.drawRect(snake[i].x * size, snake[i].y * size, 20, 20, 255, 0, 0);
+		}
+
+
 		ikkuna.drawRect(random_x * size, random_y * size, 20, 20, 0, 0, 255);
 		ikkuna.refresh();
 
