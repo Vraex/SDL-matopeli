@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include "Level.h"
 #include "Window.h"
+#include <cstdlib>
+#include <time.h>
 
 void LopetaPeli(Window);
 
@@ -17,11 +19,20 @@ int main(int argc, char* args[])
 
 	Window ikkuna;
 
+	int size = 20;
 	int laskuri = 0;
-	int x = 100;
-	int y = 100;
+	int x = 16;
+	int y = 12;
+
+	srand (time(NULL));
+
+	int random_x = rand() % 31;
+	int random_y = rand() % 23;
+	
+	//käärmeen kenttä x=31 , y=23
 
 	Level square;
+
 
 	while (!quit) {
 
@@ -71,37 +82,37 @@ int main(int argc, char* args[])
 		
 		laskuri++;
 
-		if (laskuri > 30)
+		if (laskuri > 15)
 		{
 			old_suunta = suunta;
 
-			if (suunta == UP && y-20>=0)
+			if (suunta == UP && y-1>=0)
 			{
-				y -= 20;
+				y -= 1;
 			}
 			else
 			{
 				LopetaPeli(ikkuna);
 			}
-			if (suunta == DOWN && y+20<Window_HEIGHT)
+			if (suunta == DOWN && y+1<24)
 			{
-				y += 20;
+				y += 1;
 			}
 			else
 			{
 				LopetaPeli(ikkuna);
 			}
-			if (suunta == LEFT && x-20>=0)
+			if (suunta == LEFT && x-1>=0)
 			{
-				x -= 20;
+				x -= 1;
 			}
 			else
 			{
 				LopetaPeli(ikkuna);
 			}
-			if (suunta == RIGHT && x+20<Window_WIDTH)
+			if (suunta == RIGHT && x+1<32)
 			{
-				x += 20;
+				x += 1;
 			}
 			else
 			{
@@ -110,9 +121,17 @@ int main(int argc, char* args[])
 			laskuri = 0;
 		}
 	
+		if (x == random_x && y == random_y)
+		{
+		random_x = rand() % 31;
+		random_y = rand() % 23;
+		}
+
 		ikkuna.clear();
-		ikkuna.drawRect(x, y, 20, 20, 255, 0, 0);
+		ikkuna.drawRect(x * size, y * size, 20, 20, 255, 0, 0);
+		ikkuna.drawRect(random_x * size, random_y * size, 20, 20, 0, 0, 255);
 		ikkuna.refresh();
+
 	}
 	
 	return 0;
