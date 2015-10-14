@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <vector>
 
-void LopetaPeli(Window);
+void GameOver(Window);
 
 int main(int argc, char* args[])
 {
@@ -16,13 +16,13 @@ int main(int argc, char* args[])
 	SDL_Init( SDL_INIT_VIDEO );
 	
 	enum {UP, DOWN, LEFT, RIGHT};
-	int suunta = DOWN;
-	int old_suunta = suunta;
+	int direction = DOWN;
+	int old_direction = direction;
 
-	Window ikkuna;
+	Window window;
 
 	int size = 20;
-	int laskuri = 0;
+	int calculator = 0;
 
 	int start_x = 16, start_y = 12;
 	int x = start_x, y = start_y;
@@ -63,79 +63,81 @@ int main(int argc, char* args[])
                 switch( e.key.keysym.sym )
                 {
                     case SDLK_UP:
-						if (old_suunta != DOWN)
+						if (old_direction != DOWN)
 						{
-							suunta = UP;
+							direction = UP;
 						}
 						
                     break;
 
                     case SDLK_DOWN:
 						
-						if (old_suunta != UP)
+						if (old_direction != UP)
 						{
-							suunta = DOWN;
+							direction = DOWN;
 						}
 						
                     break;
 
                     case SDLK_LEFT:
 
-						if (old_suunta != RIGHT)
+						if (old_direction != RIGHT)
 						{
-							suunta = LEFT;
+							direction = LEFT;
 						}
                     break;
 
                     case SDLK_RIGHT:
-						if (old_suunta != LEFT)
+						if (old_direction != LEFT)
 						{
-							suunta = RIGHT;
+							direction = RIGHT;
 						}
                     break;
                 }
             }
 		}
 		
-		laskuri++;
+		calculator++;
 
-		if (laskuri > 15)
+		if (calculator > 15)
 		{
-			old_suunta = suunta;
+			old_direction = direction;
 
-			if (suunta == UP && snake[0].y-1>=0)
+			if (direction == UP && snake[0].y-1>=0)
 			{
 				snake[0].y--;
+				//snake.erase[0];
+				//snake.push_back;
 			}
 			else
 			{
-				LopetaPeli(ikkuna);
+				GameOver(window);
 			}
-			if (suunta == DOWN && snake[0].y+1<24)
+			if (direction == DOWN && snake[0].y+1<24)
 			{
 				snake[0].y++;
 			}
 			else
 			{
-				LopetaPeli(ikkuna);
+				GameOver(window);
 			}
-			if (suunta == LEFT && snake[0].x-1>=0)
+			if (direction == LEFT && snake[0].x-1>=0)
 			{
 				snake[0].x--;
 			}
 			else
 			{
-				LopetaPeli(ikkuna);
+				GameOver(window);
 			}
-			if (suunta == RIGHT && snake[0].x+1<32)
+			if (direction == RIGHT && snake[0].x+1<32)
 			{
 				snake[0].x++;
 			}
 			else
 			{
-				LopetaPeli(ikkuna);
+				GameOver(window);
 			}
-			laskuri = 0;
+			calculator = 0;
 		}
 	
 		if (snake[0].x == random_x && snake[0].y == random_y)
@@ -145,25 +147,25 @@ int main(int argc, char* args[])
 		}
 
 
-		ikkuna.clear();
+		window.clear();
 		
 		
 
 		for (int i = 0; i < snake_size; i++)
 		{
-			ikkuna.drawRect(snake[i].x * size, snake[i].y * size, 20, 20, 255, 0, 0);
+			window.drawRect(snake[i].x * size, snake[i].y * size, 20, 20, 255, 0, 0);
 		}
 
 
-		ikkuna.drawRect(random_x * size, random_y * size, 20, 20, 0, 0, 255);
-		ikkuna.refresh();
+		window.drawRect(random_x * size, random_y * size, 20, 20, 0, 0, 255);
+		window.refresh();
 
 	}
 	
 	return 0;
 }
 
-void LopetaPeli(Window ikkuna)
+void GameOver(Window window)
 {
-		ikkuna.clear();
+		window.clear();
 }
