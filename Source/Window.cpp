@@ -1,5 +1,7 @@
 #include "Window.h"
 
+//Creating game window
+
 Window::Window()
 {
 	window = SDL_CreateWindow("Matopeli", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, Window_WIDTH, Window_HEIGHT, SDL_WINDOW_SHOWN);
@@ -10,6 +12,8 @@ void Window::refresh()
 {
 	SDL_RenderPresent(renderer);
 }
+
+//Background color
 
 void Window::fill(int r, int g, int b)
 {
@@ -22,6 +26,8 @@ void Window::clear()
 {
 	fill(0,0,0);
 }
+
+//Drawing the snake
 
 void Window::drawRect(int x, int y, int w, int h, int r, int g, int b)
 {

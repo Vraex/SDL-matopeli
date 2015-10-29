@@ -2,6 +2,9 @@
 #define WINDOW_H_DEFINED
 
 #include <SDL.h>
+
+//game window size
+
 const int Window_WIDTH = 640;
 const int Window_HEIGHT = 480;
 
