@@ -6,6 +6,7 @@
 #include <time.h>
 #include <stdlib.h>
 #include <vector>
+#include <algorithm>
 
 void GameOver(Window);
 
@@ -98,68 +99,125 @@ int main(int argc, char* args[])
 		}
 		
 		calculator++;
+		
+		//iterator?
 
-		if (calculator > 15)
+		for (std::vector<SDL_Point>::iterator it = snake.begin() + 1; it != snake.end(); it++)
+		{
+			if ((snake.begin())->x == (*it).x &&
+				(snake.begin())->y == (*it).y)
+			{
+				SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION,"Game Over","You died!",NULL);
+				SDL_Quit;
+				return 0;
+			}
+		}
+
+		
+		if (calculator > 7)
 		{
 			old_direction = direction;
+			int snake_x = snake[snake_size-1].x;
+			int snake_y = snake[snake_size-1].y;
 
-			if (direction == UP && snake[0].y-1>=0)
+			if (direction == UP && snake_y-1>=0)
 			{
-				snake[0].y--;
-				//snake.erase[0];
-				//snake.push_back;
+				tmp_point.x = snake[snake_size-1].x;
+				tmp_point.y = snake[snake_size-1].y - 1;
+				//snake[0].y--;
+				if (snake_x == random_x && snake_y == random_y)
+				{
+					snake_size++;
+					random_x = rand() % 31;
+					random_y = rand() % 23;
+					snake.push_back(tmp_point);
+				}
+				else
+				{
+					snake.push_back(tmp_point);
+					snake.erase(snake.begin());
+				}
+			
+			}
+			else if (direction == DOWN && snake_y+1<24)
+			{
+				//snake[0].y++;
+				
+				tmp_point.x = snake[snake_size-1].x;
+				tmp_point.y = snake[snake_size-1].y + 1;
+
+				if (snake_x == random_x && snake_y == random_y)
+				{
+					snake_size++;
+					random_x = rand() % 31;
+					random_y = rand() % 23;
+					snake.push_back(tmp_point);
+				}
+				else
+				{
+					snake.push_back(tmp_point);
+					snake.erase(snake.begin());
+				}
+			}
+			else if (direction == LEFT && snake_x-1>=0)
+			{
+				//snake[0].x--;
+				
+				tmp_point.x = snake[snake_size-1].x - 1;
+				tmp_point.y = snake[snake_size-1].y;
+
+				if (snake_x == random_x && snake_y == random_y)
+				{
+					snake_size++;
+					random_x = rand() % 31;
+					random_y = rand() % 23;
+					snake.push_back(tmp_point);
+				}
+				else
+				{
+					snake.push_back(tmp_point);
+					snake.erase(snake.begin());
+				}
+			}
+			else if (direction == RIGHT && snake_x+1<32)
+			{
+				//snake[0].x++;
+				
+				tmp_point.x = snake[snake_size-1].x + 1;
+				tmp_point.y = snake[snake_size-1].y;
+
+				if (snake_x == random_x && snake_y == random_y)
+				{
+					snake_size++;
+					random_x = rand() % 31;
+					random_y = rand() % 23;
+					snake.push_back(tmp_point);
+				}
+				else
+				{
+					snake.push_back(tmp_point);
+					snake.erase(snake.begin());
+				}
 			}
 			else
 			{
-				GameOver(window);
-			}
-			if (direction == DOWN && snake[0].y+1<24)
-			{
-				snake[0].y++;
-			}
-			else
-			{
-				GameOver(window);
-			}
-			if (direction == LEFT && snake[0].x-1>=0)
-			{
-				snake[0].x--;
-			}
-			else
-			{
-				GameOver(window);
-			}
-			if (direction == RIGHT && snake[0].x+1<32)
-			{
-				snake[0].x++;
-			}
-			else
-			{
-				GameOver(window);
+				//GameOver(window);
+				SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION,"Game Over","You died!",NULL);
+				SDL_Quit;
+				return 0;
 			}
 			calculator = 0;
 		}
-	
-		if (snake[0].x == random_x && snake[0].y == random_y)
-		{
-		random_x = rand() % 31;
-		random_y = rand() % 23;
-		}
-
 
 		window.clear();
 		
-		
-
 		for (int i = 0; i < snake_size; i++)
 		{
 			window.drawRect(snake[i].x * size, snake[i].y * size, 20, 20, 255, 0, 0);
 		}
 
-
 		window.drawRect(random_x * size, random_y * size, 20, 20, 0, 0, 255);
 		window.refresh();
-
 	}
 	
 	return 0;

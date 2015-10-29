@@ -13,7 +13,7 @@ void Window::refresh()
 
 void Window::fill(int r, int g, int b)
 {
-	SDL_SetRenderDrawColor(renderer, r, g, b, 255);
+	SDL_SetRenderDrawColor(renderer, r, 75, b, 255);
 		
 	SDL_RenderClear(renderer);
 }
@@ -26,7 +26,7 @@ void Window::clear()
 void Window::drawRect(int x, int y, int w, int h, int r, int g, int b)
 {
 	SDL_Rect fillRect = {x, y, w, h};
-	SDL_SetRenderDrawColor(renderer, r, g, b, 255);
+	SDL_SetRenderDrawColor(renderer, r, 200, b, 255);
 	SDL_RenderFillRect(renderer, &fillRect );
 }
 
